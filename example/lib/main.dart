@@ -27,6 +27,8 @@ class MyExample extends StatefulWidget {
 
 class _MyExampleState extends State<MyExample> {
   int _selectedIndex = 0; //default index
+  static const String basePath = "assets/images";
+  static const String accountImage = "$basePath/account.png";
 
   final List<Widget> _widgetOptions = [
     const Text('Home'),
@@ -35,6 +37,7 @@ class _MyExampleState extends State<MyExample> {
     const Text('Loyalty'),
     const Text('Requests'),
   ];
+
   @override
   Widget build(BuildContext context) {
     return Scaffold(
@@ -66,20 +69,32 @@ class _MyExampleState extends State<MyExample> {
           CustomBottomBarItems(
             label: 'Home',
             icon: Icons.home,
+           // assetsImagePath: accountImage,
+            isAssetsImage: false,
           ),
           CustomBottomBarItems(
             label: 'Account',
-            icon: Icons.account_box_outlined,
+           //icon: Icons.account_box_outlined,
+            assetsImagePath: accountImage,
+            isAssetsImage: true,
           ),
           CustomBottomBarItems(
-              label: 'Leaves', icon: Icons.calendar_today_outlined),
+            label: 'Leaves',
+            icon: Icons.calendar_today_outlined,
+            // assetsImagePath: accountImage,
+            isAssetsImage: false,
+          ),
           CustomBottomBarItems(
             label: 'Loyalty',
             icon: Icons.card_giftcard_rounded,
+            assetsImagePath: accountImage,
+            isAssetsImage: false,
           ),
           CustomBottomBarItems(
             label: 'Requests',
-            icon: Icons.list,
+           // icon: Icons.list,
+            assetsImagePath: accountImage,
+            isAssetsImage: true,
           ),
         ],
       ),

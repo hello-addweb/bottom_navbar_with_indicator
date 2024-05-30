@@ -69,8 +69,10 @@ class CustomLineIndicatorBottomNavbar extends StatelessWidget {
                 child: CustomLineIndicatorBottomNavbarItems(
                   selectedColor: selectedColor,
                   unSelectedColor: unSelectedColor,
-                  icon: customBottomBarItems[i].icon,
                   label: customBottomBarItems[i].label,
+                  isAssetsImage: customBottomBarItems[i].isAssetsImage,
+                  imagePath: customBottomBarItems[i].assetsImagePath,
+                  icon: customBottomBarItems[i].icon,
                   unSelectedFontSize: unselectedFontSize,
                   selectedFontSize: selectedFontSize,
                   unselectedIconSize: unselectedIconSize,
@@ -96,27 +98,43 @@ class CustomLineIndicatorBottomNavbar extends StatelessWidget {
 ///
 /// custom bottom bar items model.
 class CustomBottomBarItems {
-  /// pass icon with type IconData
-  final IconData icon;
-
   /// pass label with type .
-  final String label;
+  String label;
+
+  /// pass icon with type IconData
+  IconData? icon;
+
+  /// pass image path is isAssetsImage = true
+  String? assetsImagePath;
+
+  /// pass the isAssetsImage true and sent assets image string.
+  bool isAssetsImage;
 
   CustomBottomBarItems({
-    required this.icon,
+    this.icon,
+    this.assetsImagePath,
+    required this.isAssetsImage,
     required this.label,
   });
+}
+
+void alwaysAssert(bool condition, String message) {
+  if (!condition) {
+    throw AssertionError(message);
+  }
 }
 
 /// Documentation
 ///
 /// custom line indicator bottom navbar items stateless widget.
 class CustomLineIndicatorBottomNavbarItems extends StatelessWidget {
+  /// pass label with type .
+  final String label;
+  final bool isAssetsImage;
+  final String? imagePath;
+
   /// pass icon with type IconData
   final IconData? icon;
-
-  /// pass label with type .
-  final String? label;
   final Color? selectedColor;
   final Color? unSelectedColor;
   final double unSelectedFontSize;
@@ -133,8 +151,10 @@ class CustomLineIndicatorBottomNavbarItems extends StatelessWidget {
 
   const CustomLineIndicatorBottomNavbarItems({
     super.key,
+    required this.label,
+    required this.isAssetsImage,
+    this.imagePath,
     this.icon,
-    this.label,
     this.selectedColor,
     this.unSelectedColor,
     this.unSelectedFontSize = 11,
@@ -194,15 +214,28 @@ class CustomLineIndicatorBottomNavbarItems extends StatelessWidget {
               // height: 60,
               child: Column(
                 children: [
-                  Icon(
-                    icon,
-                    size: currentIndex == index
-                        ? selectedIconSize
-                        : unselectedIconSize,
-                    color: currentIndex == index
-                        ? selectedColor ?? bottomTheme.unselectedItemColor
-                        : unSelectedColor,
-                  ),
+                  isAssetsImage
+                      ? Image.asset(
+                          imagePath!,
+                          height: currentIndex == index
+                              ? selectedIconSize
+                              : unselectedIconSize,
+                          width: currentIndex == index
+                              ? selectedIconSize
+                              : unselectedIconSize,
+                          color: currentIndex == index
+                              ? selectedColor ?? bottomTheme.unselectedItemColor
+                              : unSelectedColor,
+                        )
+                      : Icon(
+                          icon!,
+                          size: currentIndex == index
+                              ? selectedIconSize
+                              : unselectedIconSize,
+                          color: currentIndex == index
+                              ? selectedColor ?? bottomTheme.unselectedItemColor
+                              : unSelectedColor,
+                        ),
                   const SizedBox(
                     height: 5.0,
                   ),
